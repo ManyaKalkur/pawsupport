@@ -1,0 +1,155 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background: #5a2d1f;
+  color: white;
+}
+
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  background: #5a2d1f;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.logo img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.logo:hover img {
+  transform: scale(1.1);
+}
+
+.nav-buttons button {
+  margin-left: 25px;
+  background: #E76F51;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-buttons button:hover {
+  background: #F4A261;
+  color: white;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+@media (max-width: 500px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 200px;
+  }
+}
+
+.hero {
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  background: rgba(90, 45, 31, 0.8);
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.cta {
+  background: #E76F51;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta:hover {
+  background: #F4A261;
+  color: white;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.about {
+  padding: 10px 20px;
+  text-align: center;
+  background: #5a2d1f;
+  color: white;
+}
+
+.about-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.about-box {
+  background: #5a2d1f;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  width: 250px;
+  border: 2px solid #E76F51;
+}
+
+.about-box:hover {
+  background: #F4A261;
+  color: white;
+  transition: 0.3s;
+}
+
+.cta-section {
+  background: #5a2d1f;
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.cta-section:hover {
+  background: #F4A261;
+  color: white;
+  transition: 0.3s;
+}

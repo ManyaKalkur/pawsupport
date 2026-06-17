@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="../images/logo.png">
+  <title>PawSupport</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+  <img src="../images/logo.png" alt="PawSupport Logo">
+  PawSupport
+  </div>
+  <div class="nav-buttons">
+    <button onclick="goTo('pages/login.html')">Login</button>
+    <button onclick="goTo('pages/register.html')">Register</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="overlay">
+    <h1>Help Them, They Can’t Ask</h1>
+    <p>Support stray animals with love, food & care</p>
+    <a href="#about" class="cta">Get Started</a>
+  </div>
+</section>
+
+<section class="about">
+<div id="about" class="about"></div>
+  <div class="about-top">
+    <h2>What is PawSupport?</h2>
+    <p>
+      PawSupport connects donors with NGOs to ensure food, care, and shelter 
+      reach stray animals efficiently and transparently.
+    </p>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-box">
+      <h3>🐶 For Donors</h3>
+      <ul>
+        <li>Donate food, money, or supplies</li>
+        <li>Track your contributions</li>
+        <li>Adopt pets from NGOs</li>
+      </ul>
+    </div>
+
+    <div class="about-box">
+      <h3>🏢 For NGOs</h3>
+      <ul>
+        <li>Create requests for resources</li>
+        <li>Manage donations & deliveries</li>
+        <li>List pets for adoption</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Every Meal You Donate Saves a Life 🐾</h2>
+  <button class="cta" onclick="location.href='pages/register.html'">
+    Donate Now
+  </button>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
