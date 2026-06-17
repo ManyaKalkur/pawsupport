@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" type="image/png" href="../../images/logo.png">
+  <title>Register - PawSupport</title>
+  <link rel="stylesheet" href="register-style.css">
+</head>
+<body>
+<a href="../index.html" class="back-btn">← Back</a>
+<div class="container">
+  <img src="../../images/logo.png" alt="logo">
+  <h1>Register</h1>
+
+  <!-- Role Toggle -->
+  <div class="toggle">
+    <button onclick="showForm('donor')">Donor</button>
+    <button onclick="showForm('ngo')">NGO</button>
+  </div>
+
+  <!-- DONOR FORM -->
+  <form id="donorForm">
+    <input type="text"     placeholder="Name"            id="d_name"     required>
+    <input type="email"    placeholder="Email"           id="d_email"    required>
+    <input type="password" placeholder="Password"        id="d_password" required>
+    <button type="submit">Register as Donor</button>
+  </form>
+
+  <!-- NGO FORM -->
+  <form id="ngoForm" style="display:none;">
+    <input type="text"     placeholder="NGO Name"        id="n_name"     required>
+    <input type="email"    placeholder="Email"           id="n_email"    required>
+    <input type="text"     placeholder="Phone"           id="n_phone"    required>
+    <input type="text"     placeholder="City"            id="n_city"     required>
+    <input type="text"     placeholder="Registration No" id="n_reg"      required>
+    <input type="password" placeholder="Password"        id="n_password" required>
+    <button type="submit">Register as NGO</button>
+  </form>
+
+  <p>Already have an account? <a href="login.html">Login</a></p>
+</div>
+
+<script src="register-script.js"></script>
+</body>
+</html>

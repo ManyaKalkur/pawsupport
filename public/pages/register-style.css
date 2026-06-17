@@ -1,0 +1,102 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150vh;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 150%;
+  background: rgba(90, 45, 31, 0.5);
+  top: 0;
+  left: 0;
+}
+
+.container {
+  position: relative;
+  background: #5a2d1f;
+  padding: 30px;
+  border-radius: 20px;
+  height: 650px;
+  width: 400px;
+  text-align: center;
+}
+
+.container img {
+  width: 50px;
+  height: 50px;
+  margin: 10px 10px;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  background: #E76F51;
+  color: white;
+  padding: 10px;
+  margin: 10px 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #F4A261;
+  color: white;
+  transition: 0.3s;
+}
+
+.toggle button {
+  margin: 5px;
+}
+
+p {
+  color: white;
+}
+
+a {
+  color: #E76F51;
+  text-decoration: underline;
+}
+
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #E76F51;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.back-btn:hover {
+  background: #F4A261;
+  color: white;
+  transition: 0.3s;
+}
