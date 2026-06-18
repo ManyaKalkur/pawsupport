@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>Donor Dashboard - PawSupport</title>
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <button onclick="location.href='dashboard.html'">Dashboard</button>
+    <button onclick="location.href='donate.html'">Donate</button>
+    <button onclick="location.href='adopt.html'">Adopt</button>
+    <button onclick="location.href='approvals.html'">Status</button>
+    <button onclick="location.href='profile.html'">My Profile</button>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1 id="welcomeText">Welcome! 🐾</h1>
+  <p>Your contribution makes a difference for animals in need.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Total Donations</h3>
+      <p id="totalDonations">0</p>
+    </div>
+    <div class="card">
+      <h3>Amount Donated</h3>
+      <p id="totalAmount">₹ 0</p>
+    </div>
+    <div class="card">
+      <h3>Delivered</h3>
+      <p id="delivered">0</p>
+    </div>
+    <div class="card">
+      <h3>Adoption Requests</h3>
+      <p id="adoptionCount">0</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
