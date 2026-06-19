@@ -8,7 +8,10 @@ window.addEventListener("pageshow", function (event) {
   if (event.persisted) window.location.reload();
 });
 
-document.getElementById("welcomeText").innerText = `Welcome, ${profile.name}! `;
+const welcome = document.getElementById("welcomeText");
+if (welcome) {
+  welcome.innerText = `Welcome, ${profile.name}!`;
+}
 
 function logout() {
   showModal(
@@ -67,3 +70,167 @@ function showModal(title, body, confirmLabel, onConfirm, danger = false) {
   overlay.querySelector("#modalConfirm").onclick = () => { overlay.remove(); onConfirm(); };
   overlay.addEventListener("click", e => { if (e.target === overlay) overlay.remove(); });
 }
+
+//DONOR PAGE
+let selectedNGO    = null;
+let pendingRequest = null;
+
+function showSection(type) {
+  document.getElementById("ngoSection").classList.add("hidden");
+  document.getElementById("requestSection").classList.add("hidden");
+  if (type === "ngo") {
+    document.getElementById("ngoSection").classList.remove("hidden");
+  } else {
+    document.getElementById("requestSection").classList.remove("hidden");
+    loadRequests();
+  }
+}
+
+function toggleDropdown() {
+  const dropdown = document.getElementById("ngoOptions");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+document.addEventListener("click", function (e) {
+  const dropdown = document.getElementById("ngoOptions");
+  const header = document.querySelector(".dropdown-header");
+  if (!header.contains(e.target) && !dropdown.contains(e.target)) {
+    dropdown.style.display = "none";
+  }
+});
+
+function loadNGOs() {
+  fetch("http://localhost:3000/ngos")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("ngoOptions");
+      container.innerHTML = "";
+      data.forEach(ngo => {
+        const div = document.createElement("div");
+        div.innerText = `${ngo.name} (${ngo.city})`;
+        div.onclick = () => {
+          selectedNGO = ngo.ngo_id;
+          document.getElementById("selectedNGO").innerText = div.innerText;
+          container.style.display = "none";
+        };
+        container.appendChild(div);
+      });
+    })
+    .catch(err => console.error("NGO load error:", err));
+}
+
+function loadRequests() {
+  const container = document.getElementById("ngoRequests");
+  container.innerHTML = "Loading...";
+  fetch("http://localhost:3000/donation-requests")
+    .then(res => res.json())
+    .then(data => {
+      container.innerHTML = "";
+      if (!data || data.length === 0) {
+        container.innerHTML = "<p>No active requests</p>";
+        return;
+      }
+      data.forEach(req => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${req.title}</h3>
+          <p>${req.description}</p>
+          <p>Quantity: ${req.quantity}</p>
+          <p><b>${req.ngo_name}</b> (${req.ngo_city})</p>
+          <button>Donate</button>
+        `;
+        card.querySelector("button").onclick = () => {
+          confirmDonation(req.request_id, req.ngo_id, req.quantity, req.request_type);
+        };
+        container.appendChild(card);
+      });
+    })
+    .catch(err => {
+      container.innerHTML = "Error loading requests";
+      console.error(err);
+    });
+}
+
+function makeDonation() {
+  if (!selectedNGO) {
+    alert("Select an NGO first");
+    return;
+  }
+  if (document.getElementById("type").value === "") {
+    alert("Select a donation type");
+    return;
+  }
+  const donation_type= document.getElementById("type").value;
+  const amount = document.getElementById("amount").value.trim();
+  if (amount === "") {
+    alert("Enter an amount");
+    return;
+  }
+  const description= document.getElementById("desc").value;
+  fetch("http://localhost:3000/donate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      donor_id: profile.donor_id,
+      ngo_id: selectedNGO,
+      donation_type,
+      amount,
+      description
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    showSuccessModal("Thank you for helping animals in need!");
+  })
+  .catch(err => console.error("Donate error:", err));
+}
+
+function confirmDonation(request_id, ngo_id, quantity, type) {
+  pendingRequest = { request_id, ngo_id, quantity, type };
+  document.getElementById("donatePopup").classList.remove("hidden");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadNGOs();
+  document.getElementById("cancelBtn").onclick = () => {
+    document.getElementById("donatePopup").classList.add("hidden");
+    pendingRequest = null;
+  };
+  document.getElementById("yesBtn").onclick = () => {
+    if (!pendingRequest) return;
+    fetch("http://localhost:3000/donate/request", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        donor_id: profile.donor_id,
+        ngo_id: pendingRequest.ngo_id,
+        request_id: pendingRequest.request_id,
+        donation_type: pendingRequest.type,
+        amount: pendingRequest.quantity
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("donatePopup").classList.add("hidden");
+      if (data.error) { alert(data.error); return; }
+      showSuccessModal("Thank you for helping animals in need!");
+      pendingRequest = null;
+    })
+    .catch(err => console.error("Request donate error:", err));
+  };
+});
+
+function showSuccessModal(message) {
+  const modal = document.getElementById("modal");
+  modal.querySelector("p").innerText = message;
+  modal.classList.remove("hidden");
+  setTimeout(() => {
+    modal.classList.add("hidden");
+  }, 2000);
+}
+
+window.toggleDropdown = toggleDropdown;
+window.showSection    = showSection;
+window.makeDonation   = makeDonation;

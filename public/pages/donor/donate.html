@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>PawSupport Donate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <button onclick="location.href='dashboard.html'">Dashboard</button>
+    <button onclick="location.href='donate.html'">Donate</button>
+    <button onclick="location.href='adopt.html'">Adopt</button>
+    <button onclick="location.href='approvals.html'">Status</button>
+    <button onclick="location.href='profile.html'">My Profile</button>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Donate</h1>
+  <div class="toggle-buttons">
+    <button onclick="showSection('ngo')">Select NGO</button>
+    <button onclick="showSection('requests')">See NGO Requests</button>
+  </div>
+  
+  <div id="ngoSection" class="section">
+    <div class="custom-dropdown">
+      <div class="dropdown-header" onclick="toggleDropdown()">
+        <span id="selectedNGO">Select NGO</span>
+      </div>
+      <div id="ngoOptions" class="dropdown-options"></div>
+    </div>
+
+    <select id="type" required>
+      <option value="" selected disabled>Donation Type</option>
+      <option value="money">Money</option>
+      <option value="food">Food</option>
+      <option value="items">Items</option>
+    </select>
+
+    <input id="amount" placeholder="Amount / Quantity">
+    <input id="desc" placeholder="Description">
+    <button onclick="makeDonation()">Donate</button>
+  </div>
+  <div id="requestSection" class="section hidden">
+    <div id="ngoRequests" class="grid"></div>
+  </div>
+</div>
+
+<div id="donatePopup" class="popup hidden">
+  <div class="popup-box">
+    <h3>Confirm Donation</h3>
+    <p>Donate to this request?</p>
+    <div class="popup-actions">
+      <button id="yesBtn">Yes</button>
+      <button id="cancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="popup hidden">
+  <div class="popup-box">
+    <h3>Success 🐾</h3>
+    <p></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

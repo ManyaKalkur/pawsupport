@@ -38,6 +38,7 @@ body {
   height: 35px;
   object-fit: contain;
   transition: transform 0.3s;
+  filter: invert(1);
 }
 
 .logo:hover img {
