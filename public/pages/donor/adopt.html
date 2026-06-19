@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>Adopt - PawSupport</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="donate.html">Donate</a>
+    <a href="adopt.html">Adopt</a>
+    <a href="approvals.html">Status</a>
+    <a href="profile.html">My Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Adopt a Pet 🐾</h1>
+  <div id="animalGrid" class="grid"></div>
+</div>
+
+<div id="adoptPopup" class="popup hidden">
+  <div class="popup-box">
+    <h3>Adoption Request</h3>
+    <textarea id="adoptDesc" placeholder="Why do you want to adopt?"></textarea>
+    <div class="popup-actions">
+      <button onclick="submitAdoption()">Confirm</button>
+      <button onclick="closePopup()">Cancel</button>
+    </div>
+  </div>
+</div>
+<div id="modal" class="popup hidden">
+  <div class="popup-box">
+    <h3>Request Sent Successfully 🐾</h3>
+    <p></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

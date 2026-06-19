@@ -234,3 +234,70 @@ function showSuccessModal(message) {
 window.toggleDropdown = toggleDropdown;
 window.showSection    = showSection;
 window.makeDonation   = makeDonation;
+
+//ADOPT PAGE
+function loadAnimals() {
+  fetch("http://localhost:3000/animals")
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("animalGrid");
+      container.innerHTML = "";
+      if (!data || data.length === 0) {
+        container.innerHTML = "<p>No animals available right now</p>";
+        return;
+      }
+      data.forEach(animal => {
+        container.innerHTML += `
+          <div class="animal-card">
+            <img src="${animal.image_url || 'https://placehold.co/300'}" alt="${animal.name}">
+            <h2>${animal.name}</h2>
+            <p>${animal.age} yrs • ${animal.gender}</p>
+            <p><b>${animal.ngo_name}</b> (${animal.ngo_city})</p>
+            <p>${animal.description}</p>
+            <button onclick="openAdopt(${animal.animal_id})">Request Adoption</button>
+          </div>
+        `;
+      });
+    })
+    .catch(err => console.error("Animal load error:", err));
+}
+loadAnimals();
+
+let selectedAnimalId = null;
+function openAdopt(id) {
+  selectedAnimalId = id;
+  document.getElementById("adoptDesc").value = "";
+  document.getElementById("adoptPopup").classList.remove("hidden");
+}
+function closePopup() {
+  const popup = document.getElementById("adoptPopup");
+  if (popup) popup.classList.add("hidden");
+  selectedAnimalId = null;
+}
+function submitAdoption() {
+  if (!selectedAnimalId) {
+    alert("No animal selected");
+    return;
+  }
+  const req_desc = document.getElementById("adoptDesc").value;
+  fetch("http://localhost:3000/adopt", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      donor_id:  profile.donor_id,
+      animal_id: selectedAnimalId,
+      req_desc
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) { alert("Error: " + data.error); return; }
+    showSuccessModal("We have received your adoption request! The shelter will contact you soon.");
+    closePopup();
+  })
+  .catch(err => console.error("Adopt error:", err));
+}
+
+window.openAdopt      = openAdopt;
+window.closePopup     = closePopup;
+window.submitAdoption = submitAdoption;
