@@ -301,3 +301,70 @@ function submitAdoption() {
 window.openAdopt      = openAdopt;
 window.closePopup     = closePopup;
 window.submitAdoption = submitAdoption;
+
+//APPROVALS PAGE
+function loadDonations() {
+  const container = document.getElementById("donationsList");
+  container.innerHTML = "Loading donations...";
+  fetch(`http://localhost:3000/donations/${profile.donor_id}`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data || data.length === 0) {
+        container.innerHTML = "No donations found";
+        return;
+      }
+      container.innerHTML = "";
+      data.forEach(d => {
+        const div = document.createElement("div");
+        div.className = "card";
+        const statusClass = d.status.toLowerCase();
+        div.innerHTML = `
+          <h3>Donation #${d.donation_id}</h3>
+          <p><b>Request ID:</b> ${d.request_id || "Direct Donation"}</p>
+          <p><b>Type:</b> ${d.donation_type}</p>
+          <p><b>Amount:</b> ${d.amount}</p>
+          <p><b>NGO ID:</b> ${d.ngo_id}</p>
+          <p><b>Status:</b> <span class="status ${statusClass}">${d.status}</span></p>
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => {
+      container.innerHTML = "Error loading donations";
+      console.error(err);
+    });
+}
+
+function loadAdoptions() {
+  const container = document.getElementById("adoptionsList");
+  container.innerHTML = "Loading adoptions...";
+  fetch(`http://localhost:3000/adoptions/${profile.donor_id}`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data || data.length === 0) {
+        container.innerHTML = "No adoptions found";
+        return;
+      }
+      container.innerHTML = "";
+      data.forEach(a => {
+        const div = document.createElement("div");
+        div.className = "card";
+        const statusClass = a.status.toLowerCase();
+        div.innerHTML = `
+          <h3>Adoption #${a.request_id}</h3>
+          <p><b>Animal ID:</b> ${a.animal_id}</p>
+          <p><b>Status:</b> <span class="status ${statusClass}">${a.status}</span></p>
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => {
+      container.innerHTML = "Error loading adoptions";
+      console.error(err);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadDonations();
+  loadAdoptions();
+});
