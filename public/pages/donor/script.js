@@ -250,6 +250,7 @@ function loadAnimals() {
         container.innerHTML += `
           <div class="animal-card">
             <img src="${animal.image_url || 'https://placehold.co/300'}" alt="${animal.name}">
+            <h2>ID: ${animal.animal_id}</h2>
             <h2>${animal.name}</h2>
             <p>${animal.age} yrs • ${animal.gender}</p>
             <p><b>${animal.ngo_name}</b> (${animal.ngo_city})</p>
@@ -298,8 +299,8 @@ function submitAdoption() {
   .catch(err => console.error("Adopt error:", err));
 }
 
-window.openAdopt      = openAdopt;
-window.closePopup     = closePopup;
+window.openAdopt = openAdopt;
+window.closePopup = closePopup;
 window.submitAdoption = submitAdoption;
 
 //APPROVALS PAGE
@@ -368,3 +369,75 @@ document.addEventListener("DOMContentLoaded", () => {
   loadDonations();
   loadAdoptions();
 });
+
+//PROFILE PAGE
+if (profile) {
+  document.getElementById("name").value = profile.name || "";
+  document.getElementById("email").value = user.email || "";
+  document.getElementById("age").value = profile.age || "";
+  document.getElementById("city").value = profile.city || "";
+  document.getElementById("address").value = profile.address || "";
+  document.getElementById("contact").value = profile.contact_no || "";
+  document.getElementById("sidebarName").textContent = profile.name  || "—";
+  document.getElementById("sidebarEmail").textContent = user.email    || "—";
+}
+
+document.querySelector("button[type='submit']").addEventListener("click", function (e) {
+  e.preventDefault();
+  const age = document.getElementById("age").value;
+  const city = document.getElementById("city").value;
+  const address = document.getElementById("address").value;
+  const contact_no = document.getElementById("contact").value;
+  fetch("http://localhost:3000/donor/update", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      donor_id: profile.donor_id,
+      age,
+      city,
+      address,
+      contact_no
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) { alert("Error: " + data.error); return; }
+    profile.age = age;
+    profile.city = city;
+    profile.address = address;
+    profile.contact_no = contact_no;
+    localStorage.setItem("profile", JSON.stringify(profile));
+    showSuccessModal("Profile updated successfully.");
+  })
+  .catch(err => console.error("Profile update error:", err));
+});
+
+function openDeleteModal() {
+  document.getElementById("deleteModal").classList.remove("hidden");
+}
+document.getElementById("cancelDeleteBtn").onclick = () => {
+  document.getElementById("deleteModal").classList.add("hidden");
+};
+document.getElementById("confirmDeleteBtn").onclick = () => {
+  document.getElementById("deleteModal").classList.add("hidden");
+  fetch("http://localhost:3000/donor/delete", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ user_id: user.user_id })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.error) {
+      alert("Error: " + data.error);
+      return;
+    }
+    localStorage.clear();
+    showSuccessModal(
+      "Account deleted successfully. Sorry to see you go! Remember, you can always come back to help our furry friends in need."
+    );
+    setTimeout(() => {
+      window.location.href = "../../index.html";
+    }, 2000);
+  })
+  .catch(err => console.error("Delete error:", err));
+};
