@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>Donor Dashboard - PawSupport</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="ask.html">Ask Requests</a>
+    <a href="animals.html">Add Animals</a>
+    <a href="approvals.html" class="active">Approvals</a>
+    <a href="profile.html">My Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="welcome-banner">
+    <div class="banner-left">
+      <h1 id="welcomeText">Welcome !</h1>
+      <p>Manage your organisation, animals, and donation requests from here.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="stat-icon">📋</span>
+      <div class="stat-label">Total Requests</div>
+      <div class="stat-value" id="statRequests">N\A</div>
+    </div>
+    <div class="card">
+      <span class="stat-icon">⏳</span>
+      <div class="stat-label">Pending Adoptions</div>
+      <div class="stat-value" id="statPending">N\A</div>
+    </div>
+    <div class="card">
+      <span class="stat-icon">🐾</span>
+      <div class="stat-label">Animals Listed</div>
+      <div class="stat-value" id="statAnimals">N\A</div>
+    </div>
+    <div class="card">
+      <span class="stat-icon">💝</span>
+      <div class="stat-label">Donations Received</div>
+      <div class="stat-value" id="statDonations">N\A</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

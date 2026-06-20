@@ -55,7 +55,6 @@ body {
 }
 
 .buttons button,
-.toggle-buttons button,
 button {
   margin-left: 20px;
   background: #E76F51;
@@ -71,7 +70,6 @@ button {
 }
 
 .buttons button:hover,
-.toggle-buttons button:hover,
 button:hover {
   background: #F4A261;
   color: white;
@@ -176,19 +174,20 @@ button:hover {
 }
 
 .toast.success { border-color: #4caf50; }
-.toast.error   { border-color: #f44336; }
+.toast.error { border-color: #f44336; }
 
 .grid {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  gap: 60px;
+  align-items: start;
+  margin-top: 40px;
   justify-self:center;
   justify-content: center;
   gap: 30px;
-  margin-top: 80px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 80px 220px;
 }
 
-/* DONATE CSS */
 .card {
   background: #E76F51;
   color: white;
@@ -207,6 +206,19 @@ button:hover {
   background: #F4A261;
   color: white;
   transition: 0.3s;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+.animal-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
 }
 
 .card button {
@@ -263,65 +275,15 @@ button:hover {
   display: none !important;
 }
 
-.dropdown-header {
-  width: 465px;
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: none;
-  background: #444;
-  color: white;
-  margin-top: 20px;
-  cursor: pointer;
-  font-family: 'Nunito', sans-serif;
-  font-size: 14px;
-}
-
-.custom-dropdown {
-  width: 500px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  position: relative;
-  margin:20px;
-}
-
-.dropdown-header::after {
-  content: "⌄";
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: rgb(111, 109, 109);
-  font-size: 18px;
-}
-
-.dropdown-options {
-  display: none;
-  position: absolute;
-  top: 110%;
-  width: 100%;
-  background: #333;
-  border-radius: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 100;
-}
-
-.dropdown-options div {
-  padding: 12px;
-  cursor: pointer;
-}
-
-.dropdown-options div:hover {
-  background: #E76F51;
-}
-
 select,
-input {
+input,
+textarea {
+  width: 100%;
+  max-width: 500px;
   padding: 12px 16px;
   border-radius: 10px;
   border: none;
   display: grid;
-  width: 500px;
   box-sizing: border-box;
   grid-template-columns: repeat(1, 1fr);
   background: #444;
@@ -341,12 +303,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
   -webkit-text-fill-color: white;
   -webkit-box-shadow: 0 0 0px 1000px #444 inset;
-}
-
-#ngoSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .popup {
@@ -385,189 +341,4 @@ input:-webkit-autofill:focus {
   font-family: 'Nunito', sans-serif;
   color: white;
   background: #ff8c66;
-}
-
-/* ADOPT CSS */
-.animal-card {
-  background: #E76F51;
-  border-radius: 15px;
-  padding: 15px;
-  text-align: center;
-  transition: all 0.3s ease;
-  color: white;
-  font-family: 'Nunito', sans-serif;
-}
-
-.animal-card:hover {
-  transform: scale(1.05);
-  background: #F4A261;
-}
-
-.animal-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.animal-card h2 {
-  margin: 10px 0 5px;
-  font-size: 24px;
-}
-
-.animal-card p {
-  margin: 5px 0;
-  font-size: 18px;
-}
-
-.animal-card button {
-  margin-top: 10px;
-  padding: 10px;
-  width: 150px;
-  border-radius: 10px;
-  border: none;
-  background: #5a2d1f;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-  color: white;
-}
-
-.animal-card button:hover {
-  background: #E76F51;
-}
-
-/* APPROVALS CSS */
-.adoption-title {
-  margin-top: 80px;
-}
-
-.status {
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 8px;
-}
-.status.approved,
-.status.received {
-  background: #2ecc71;
-  color: white;
-}
-.status.pending,
-.status.requested {
-  background: #f39c12;
-  color: white
-}
-.status.rejected {
-  background: #e74c3c;
-  color: white;
-}
-
-/* PROFILE CSS */
-.profile-layout {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 28px;
-  align-items: start;
-}
-
-.profile-sidebar {
-  background: #2e1108;
-  border: 1px solid #8b4513;
-  border-radius: 20px;
-  padding: 32px 24px;
-  text-align: center;
-  animation: fadeUp 0.4s ease forwards;
-  position: sticky;
-  top: 88px;
-}
-
-.profile-avatar {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #8b4513, #a0522d);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
-  margin: 0 auto 18px;
-  border: 2px solid #8b4513;
-}
-
-.profile-sidebar h2 {
-  font-family: 'Nunito', sans-serif;
-  color: #f8f1e7;
-  font-size: 19px;
-  margin-bottom: 4px;
-}
-
-.role-badge {
-  display: inline-block;
-  background: rgba(139, 69, 19, 0.15);
-  border: 1px solid rgba(139, 69, 19, 0.35);
-  color: #f8f1e7;
-  border-radius: 20px;
-  padding: 4px 14px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-top: 8px;
-}
-
-.profile-email {
-  color: #cbb8a4;
-  font-size: 13px;
-  margin-top: 12px;
-  word-break: break-all;
-}
-
-.sidebar-divider {
-  height: 1px;
-  background: #8b4513;
-  margin: 20px 0;
-}
-
-.sidebar-stat {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #cbb8a4;
-  padding: 6px 0;
-}
-
-.sidebar-stat span:last-child {
-  color: #f8f1e7;
-  font-weight: 600;
-}
-
-.form-section {
-  animation: fadeUp 0.4s 0.1s ease both;
-}
-
-.danger-zone {
-  margin-top: 28px;
-  background: rgb(81, 2, 2);
-  border: 1px solid rgba(139, 69, 19, 0.3);
-  border-radius: 16px;
-  padding: 24px;
-  animation: fadeUp 0.4s 0.2s ease both;
-}
-
-.danger-zone h3 {
-  font-family: 'Nunito', sans-serif;
-  color: #ff0000;
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-.danger-zone p {
-  color: #cbb8a4;
-  font-size: 13px;
-  margin-bottom: 18px;
-  line-height: 1.5;
-}
-
-.danger-zone button {
-  background: #ff0000;
 }

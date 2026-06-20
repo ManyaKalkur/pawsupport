@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>Donor Dashboard - PawSupport</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="ask.html">Ask Requests</a>
+    <a href="animals.html">Add Animals</a>
+    <a href="approvals.html" class="active">Approvals</a>
+    <a href="profile.html">My Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>Add & Manage Animals 🐾</h1>
+    <p>List animals in your care for potential adoption.</p>
+  </div>
+  <div class="grid">
+    <div class="conatiner">
+      <h2>Register Animal</h2>
+      <form id="animalForm" class="input">
+        <div class="input">
+          <label>Animal Name</label>
+          <input type="text" id="name" placeholder="e.g. Bella" required>
+        </div>
+        <div class="select">
+          <label>Type</label>
+          <select id="type" class="select" required>
+            <option value="">Select type</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+          </select>
+        </div>
+        <div class="insert">
+          <label>Age (years)</label>
+          <input type="number" id="age" placeholder="e.g. 2" min="0" max="30">
+        </div>
+        <div class="select">
+          <label>Image URL (optional)</label>
+          <input type="text" id="image_url" placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="select">
+          <label>Description (optional)</label>
+          <textarea id="desc" placeholder="Any notes about this animal..."></textarea>
+        </div>
+        <button type="submit" class="button">Add Animal</button>
+      </form>
+    </div>
+
+    <div class="animal-list-section">
+      <div class="section-divider"></div>
+      <div id="animalList" class="cards-grid">
+        <div class="empty-state">
+          <div class="empty-icon">🐾</div>
+          <p>Loading animals…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
