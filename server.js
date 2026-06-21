@@ -329,12 +329,12 @@ app.get("/ngo/animals/:ngo_id", (req, res) => {
 });
 
 app.post("/ngo/animals/add", (req, res) => {
-  const { ngo_id, name, type, age, description, image_url } = req.body;
+  const { ngo_id, name, type, gender, age, description, image_url } = req.body;
   if (!ngo_id || !name || !type)
     return res.status(400).json({ error: "ngo_id, name, and type are required" });
   db.query(
-    "INSERT INTO animals (ngo_id, name, type, age, description, image_url) VALUES (?, ?, ?, ?, ?, ?)",
-    [ngo_id, name, type, age || null, description || null, image_url || null],
+    "INSERT INTO animals (ngo_id, name, type, gender, age, description, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    [ngo_id, name, type, gender, age || null, description || null, image_url || null],
     (err) => {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ message: "Animal added" });

@@ -28,13 +28,15 @@ function logout() {
 }
 
 function loadStats() {
+  const totalDonations = document.getElementById("totalDonations");
+  if (!totalDonations) return;
   fetch(`http://localhost:3000/donor/stats/${profile.donor_id}`)
     .then(res => res.json())
     .then(data => {
       document.getElementById("totalDonations").innerText = data.total_donations;
-      document.getElementById("totalAmount").innerText    = "₹ " + data.total_amount;
-      document.getElementById("delivered").innerText      = data.delivered;
-      document.getElementById("adoptionCount").innerText  = data.adoption_count;
+      document.getElementById("totalAmount").innerText = "₹ " + data.total_amount;
+      document.getElementById("delivered").innerText = data.delivered;
+      document.getElementById("adoptionCount").innerText = data.adoption_count;
     })
     .catch(err => console.error("Stats error:", err));
 }
@@ -94,24 +96,29 @@ function toggleDropdown() {
 document.addEventListener("click", function (e) {
   const dropdown = document.getElementById("ngoOptions");
   const header = document.querySelector(".dropdown-header");
+  if (!dropdown || !header) return;
   if (!header.contains(e.target) && !dropdown.contains(e.target)) {
     dropdown.style.display = "none";
   }
 });
 
 function loadNGOs() {
+  const container= document.getElementById("ngoOptions");
+  if (!container) return;
   fetch("http://localhost:3000/ngos")
     .then(res => res.json())
     .then(data => {
-      const container = document.getElementById("ngoOptions");
       container.innerHTML = "";
       data.forEach(ngo => {
         const div = document.createElement("div");
         div.innerText = `${ngo.name} (${ngo.city})`;
         div.onclick = () => {
           selectedNGO = ngo.ngo_id;
-          document.getElementById("selectedNGO").innerText = div.innerText;
-          container.style.display = "none";
+          const selected = document.getElementById("selectedNGO");
+          if (selected) {
+            selected.innerText = div.innerText;
+          }
+          container.style.display= "none";
         };
         container.appendChild(div);
       });
@@ -194,32 +201,41 @@ function confirmDonation(request_id, ngo_id, quantity, type) {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadNGOs();
-  document.getElementById("cancelBtn").onclick = () => {
-    document.getElementById("donatePopup").classList.add("hidden");
-    pendingRequest = null;
-  };
-  document.getElementById("yesBtn").onclick = () => {
-    if (!pendingRequest) return;
-    fetch("http://localhost:3000/donate/request", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        donor_id: profile.donor_id,
-        ngo_id: pendingRequest.ngo_id,
-        request_id: pendingRequest.request_id,
-        donation_type: pendingRequest.type,
-        amount: pendingRequest.quantity
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("donatePopup").classList.add("hidden");
-      if (data.error) { alert(data.error); return; }
-      showSuccessModal("Thank you for helping animals in need!");
+  const cancelBtn = document.getElementById("cancelBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  if (cancelBtn) {
+    cancelBtn.onclick = () => {
+      document.getElementById("donatePopup")?.classList.add("hidden");
       pendingRequest = null;
-    })
-    .catch(err => console.error("Request donate error:", err));
-  };
+    };
+  }
+  if (yesBtn) {
+    yesBtn.onclick = () => {
+      if (!pendingRequest) return;
+      fetch("http://localhost:3000/donate/request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          donor_id: profile.donor_id,
+          ngo_id: pendingRequest.ngo_id,
+          request_id: pendingRequest.request_id,
+          donation_type: pendingRequest.type,
+          amount: pendingRequest.quantity
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("donatePopup")?.classList.add("hidden");
+        if (data.error) {
+          alert(data.error);
+          return;
+        }
+        showSuccessModal("Thank you for helping animals in need!");
+        pendingRequest = null;
+      })
+      .catch(err => console.error("Request donate error:", err));
+    };
+  }
 });
 
 function showSuccessModal(message) {
@@ -237,10 +253,11 @@ window.makeDonation   = makeDonation;
 
 //ADOPT PAGE
 function loadAnimals() {
+  const container = document.getElementById("animalGrid");
+  if (!container) return;
   fetch("http://localhost:3000/animals")
     .then(res => res.json())
     .then(data => {
-      const container = document.getElementById("animalGrid");
       container.innerHTML = "";
       if (!data || data.length === 0) {
         container.innerHTML = "<p>No animals available right now</p>";
@@ -306,6 +323,7 @@ window.submitAdoption = submitAdoption;
 //APPROVALS PAGE
 function loadDonations() {
   const container = document.getElementById("donationsList");
+  if (!container) return;
   container.innerHTML = "Loading donations...";
   fetch(`http://localhost:3000/donations/${profile.donor_id}`)
     .then(res => res.json())
@@ -338,6 +356,7 @@ function loadDonations() {
 
 function loadAdoptions() {
   const container = document.getElementById("adoptionsList");
+  if (!container) return;
   container.innerHTML = "Loading adoptions...";
   fetch(`http://localhost:3000/adoptions/${profile.donor_id}`)
     .then(res => res.json())
@@ -371,73 +390,85 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //PROFILE PAGE
-if (profile) {
+if (profile && document.getElementById("name")) {
   document.getElementById("name").value = profile.name || "";
   document.getElementById("email").value = user.email || "";
   document.getElementById("age").value = profile.age || "";
   document.getElementById("city").value = profile.city || "";
   document.getElementById("address").value = profile.address || "";
   document.getElementById("contact").value = profile.contact_no || "";
-  document.getElementById("sidebarName").textContent = profile.name  || "—";
-  document.getElementById("sidebarEmail").textContent = user.email    || "—";
+  document.getElementById("sidebarName").textContent = profile.name || "";
+  document.getElementById("sidebarEmail").textContent = user.email || "";
 }
 
-document.querySelector("button[type='submit']").addEventListener("click", function (e) {
-  e.preventDefault();
-  const age = document.getElementById("age").value;
-  const city = document.getElementById("city").value;
-  const address = document.getElementById("address").value;
-  const contact_no = document.getElementById("contact").value;
-  fetch("http://localhost:3000/donor/update", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      donor_id: profile.donor_id,
-      age,
-      city,
-      address,
-      contact_no
+const submitBtn = document.querySelector("button[type='submit']");
+if (submitBtn) {
+  submitBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    const age= document.getElementById("age")?.value;
+    const city= document.getElementById("city")?.value;
+    const address= document.getElementById("address")?.value;
+    const contact_no= document.getElementById("contact")?.value;
+    fetch("http://localhost:3000/donor/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        donor_id: profile.donor_id,
+        age,
+        city,
+        address,
+        contact_no
+      })
     })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.error) { alert("Error: " + data.error); return; }
-    profile.age = age;
-    profile.city = city;
-    profile.address = address;
-    profile.contact_no = contact_no;
-    localStorage.setItem("profile", JSON.stringify(profile));
-    showSuccessModal("Profile updated successfully.");
-  })
-  .catch(err => console.error("Profile update error:", err));
-});
+    .then(res=> res.json())
+    .then(data => {
+      if (data.error) {
+        alert("Error: "+ data.error);
+        return;
+      }
+      profile.age= age;
+      profile.city= city;
+      profile.address= address;
+      profile.contact_no= contact_no;
+      localStorage.setItem("profile", JSON.stringify(profile));
+      showSuccessModal("Profile updated successfully.");
+    })
+    .catch(err => console.error("Profile update error:", err));
+  });
+}
 
 function openDeleteModal() {
   document.getElementById("deleteModal").classList.remove("hidden");
 }
-document.getElementById("cancelDeleteBtn").onclick = () => {
-  document.getElementById("deleteModal").classList.add("hidden");
-};
-document.getElementById("confirmDeleteBtn").onclick = () => {
-  document.getElementById("deleteModal").classList.add("hidden");
-  fetch("http://localhost:3000/donor/delete", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ user_id: user.user_id })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.error) {
-      alert("Error: " + data.error);
-      return;
-    }
-    localStorage.clear();
-    showSuccessModal(
-      "Account deleted successfully. Sorry to see you go! Remember, you can always come back to help our furry friends in need."
-    );
-    setTimeout(() => {
-      window.location.href = "../../index.html";
-    }, 2000);
-  })
-  .catch(err => console.error("Delete error:", err));
-};
+const cancelDeleteBtn= document.getElementById("cancelDeleteBtn");
+if (cancelDeleteBtn) {
+  cancelDeleteBtn.onclick= () => {
+    document.getElementById("deleteModal")?.classList.add("hidden");
+  };
+}
+const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+if (confirmDeleteBtn) {
+  confirmDeleteBtn.onclick = () => {
+    document.getElementById("deleteModal")?.classList.add("hidden");
+    fetch("http://localhost:3000/donor/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: user.user_id })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        alert("Error: " + data.error);
+        return;
+      }
+      localStorage.clear();
+      showSuccessModal(
+        "Account deleted successfully. Sorry to see you go! Remember, you can always come back to help our furry friends in need."
+      );
+      setTimeout(() => {
+        window.location.href = "../../index.html";
+      }, 2000);
+    })
+    .catch(err => console.error("Delete error:", err));
+  };
+}
