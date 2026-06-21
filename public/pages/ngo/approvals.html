@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>Donor Dashboard - PawSupport</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="ask.html">Ask Requests</a>
+    <a href="animals.html">Add Animals</a>
+    <a href="approvals.html" class="active">Approvals</a>
+    <a href="profile.html">My Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+<div class="page-wrapper">
+  <div class="container">
+  <div class="page-header">
+    <h1>Approvals </h1>
+    <p>Review adoption requests and manage incoming donations.</p>
+  </div>
+  <div class="toggle-buttons">
+    <button onclick="switchTab('adoptions',this)">Adoption Requests</button>
+    <button onclick="switchTab('donations', this)">Donation Updates</button>
+  </div>
+  <div id="tab-adoptions" class="tab-panel active">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterAdoptions('all', this)">All</button>
+      <button class="filter-btn" onclick="filterAdoptions('pending', this)">⏳ Pending</button>
+      <button class="filter-btn" onclick="filterAdoptions('approved',this)">✅ Approved</button>
+      <button class="filter-btn" onclick="filterAdoptions('rejected',this)">❌ Rejected</button>
+    </div>
+    <div id="adoptionsList" class="grid">
+      <div class="empty-state" style="grid-column:1/-1"><p>Loading…</p></div>
+    </div>
+  </div>
+  <div id="tab-donations" class="tab-panel">
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterDonations('all',this)">All</button>
+      <button class="filter-btn" onclick="filterDonations('requested',this)">⏳ Pending</button>
+      <button class="filter-btn" onclick="filterDonations('approved',this)">👍 Approved</button>
+      <button class="filter-btn" onclick="filterDonations('received',this)">✅ Received</button>
+      <button class="filter-btn" onclick="filterDonations('rejected',this)">❌ Rejected</button>
+    </div>
+    <div id="donationsList" class="grid">
+      <div class="empty-state" style="grid-column:1/-1"></div>
+      <p>Loading…</p>
+    </div>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
