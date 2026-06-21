@@ -22,14 +22,28 @@ document.getElementById("donorForm").addEventListener("submit", function (e) {
       alert("Error: " + data.error);
       return;
     }
-    alert("Donor Registered Successfully 🐾");
-    window.location.href = "login.html";
+    showToast("Donor Registered Successfully");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 3000);
   })
   .catch(err => {
     alert("Could not reach server. Is it running?");
     console.error(err);
   });
 });
+
+function showToast(message, type = "success") {
+  const existing = document.querySelector(".toast");
+  if (existing) existing.remove();
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  const icons = { success: "✅", error: "❌", info: "ℹ️" };
+  toast.innerHTML = `<span>${icons[type] || "🐾"}</span> <span>${message}</span>`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.style.opacity = "0", 2800);
+  setTimeout(() => toast.remove(), 3200);
+}
 
 //NGO registration
 document.getElementById("ngoForm").addEventListener("submit", function (e) {
@@ -53,8 +67,10 @@ document.getElementById("ngoForm").addEventListener("submit", function (e) {
       alert("Error: " + data.error);
       return;
     }
-    alert("NGO Registered Successfully 🏢");
-    window.location.href = "login.html";
+    showToast("NGO Registered Successfully");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 3000);
   })
   .catch(err => {
     alert("Could not reach server. Is it running?");
