@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>Donor Dashboard - PawSupport</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="ask.html">Ask Requests</a>
+    <a href="animals.html">Add Animals</a>
+    <a href="approvals.html" class="active">Approvals</a>
+    <a href="profile.html">My Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>My Profile</h1>
+  </div>
+  <div class="profile-layout">
+    <div class="profile-sidebar">
+      <div class="profile-avatar" id="avatarEmoji">🐾</div>
+      <h2 id="sidebarName">-</h2>
+      <div class="role-badge">NGO</div>
+      <div class="profile-email" id="sidebarEmail">-</div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-stat"><span>Requests</span><span id="statRequests">N\A</span></div>
+      <div class="sidebar-stat"><span>Animals</span><span id="statAnimals">N\A</span></div>
+      <div class="sidebar-stat"><span>Donations</span><span id="statDonations">N\A</span></div>
+    </div>
+    <div class="form-section">
+        <h2>Edit Details</h2>
+        <form id="profileForm" class="styled-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Organisation Name</label>
+              <input type="text" id="name" class="styled-input" disabled>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="email" class="styled-input" disabled>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Contact Number</label>
+              <input type="text" id="contact" class="styled-input" placeholder="Phone number">
+            </div>
+            <div class="form-group">
+              <label>City</label>
+              <input type="text" id="city" class="styled-input" placeholder="City">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" id="address" class="styled-input" placeholder="Full address">
+          </div>
+          <div class="form-group">
+            <label>About Your Organisation</label>
+            <textarea id="about" class="styled-textarea" placeholder="Tell donors about your mission…"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </form>
+        <div class="danger-zone">
+          <h3>⚠️ Danger Zone</h3>
+          <p>Permanently delete your account and all associated data. This action cannot be undone. All your animal listings, requests, and profile information will be lost forever.</p>
+          <button class="btn-danger" onclick="confirmDelete()">Delete Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../../../images/logo.png">
+  <title>Donor Dashboard - PawSupport</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="../../../images/logo.png">
+    PawSupport
+  </div>
+  <div class="buttons">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="ask.html">Ask Requests</a>
+    <a href="animals.html">Add Animals</a>
+    <a href="approvals.html" class="active">Approvals</a>
+    <a href="profile.html">My Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+<div class="page-wrapper">
+  <div class="page-header">
+    <div class="eyebrow">Incoming Support</div>
+    <h1>Donations Received 💝</h1>
+    <p>Track all the generous contributions made to your shelter.</p>
+  </div>
+
+  <div class="summary-bar" id="summaryBar">
+    <div class="summary-item"><div class="s-icon">⏳</div><div class="s-info"><div class="s-label">Loading</div><div class="s-val">—</div></div></div>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterDonations('all', this)">All</button>
+    <button class="filter-btn" onclick="filterDonations('money', this)">💰 Money</button>
+    <button class="filter-btn" onclick="filterDonations('food', this)">🥘 Food</button>
+    <button class="filter-btn" onclick="filterDonations('items', this)">📦 Items</button>
+  </div>
+
+  <div id="donationsList" class="donations-grid cards-grid">
+    <div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon">💝</div>
+      <p>Loading donations…</p>
+    </div>
+  </div>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>
